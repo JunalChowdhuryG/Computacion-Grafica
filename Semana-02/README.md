@@ -8,30 +8,30 @@ Las transformaciones geométricas modifican la posición, tamaño o orientación
 
 ### **Teoría**
 - **Traslación**: Desplaza la imagen en los ejes x e y. Matemáticamente, para un píxel (x, y), la nueva posición es (x + tx, y + ty), donde tx y ty son los desplazamientos. La matriz afín es:
-  \[
+  $$
   \begin{bmatrix}
   1 & 0 & tx \\
   0 & 1 & ty \\
   0 & 0 & 1
   \end{bmatrix}
-  \]
+  $$
 - **Escalado**: Cambia el tamaño de la imagen multiplicando las coordenadas por factores sx (horizontal) y sy (vertical). La matriz es:
-  \[
+  $$
   \begin{bmatrix}
   sx & 0 & 0 \\
   0 & sy & 0 \\
   0 & 0 & 1
   \end{bmatrix}
-  \]
+  $$
   Un escalado uniforme (sx = sy) preserva la relación de aspecto.
 - **Rotación**: Gira la imagen alrededor de un punto (usualmente el centro) por un ángulo θ. La matriz de rotación en sentido antihorario es:
-  \[
+  $$
   \begin{bmatrix}
   \cos\theta & -\sin\theta & 0 \\
   \sin\theta & \cos\theta & 0 \\
   0 & 0 & 1
   \end{bmatrix}
-  \]
+  $$
   Para rotación en sentido horario, se invierten los signos de los términos con seno: cosθ y sinθ en la primera fila, -sinθ y cosθ en la segunda. Para composiciones, se combinan matrices (e.g., rotación seguida de traslación para centrar la imagen).
 
 Estas transformaciones pueden causar artefactos si no se aplica interpolación (e.g., bilineal o bicúbica). En casos avanzados, como corrección de perspectiva, se usa una transformación proyectiva (homografía) con una matriz 3x3 general.
@@ -127,9 +127,9 @@ Los espacios de color representan la información cromática de manera estructur
   RGB y CMYK no son intuitivos para humanos; HSI lo es, con intensidad en eje vertical.
 - **Equivalencia y Conversiones**:
   - **RGB → HSI**:
-    \[
+    $$
     I = \frac{R + G + B}{3}, \quad S = 1 - \frac{3 \min(R,G,B)}{R+G+B}, \quad H = \cos^{-1}\left( \frac{(R-G) + (R-B)}{2\sqrt{(R-G)^2 + (R-B)(G-B)}} \right)
-    \]
+    $$
     Ajustar H basado en canales dominantes.
   - **HSI → RGB**: Dependiente del sector de H (e.g., para H en [0,120°]: R = I(1 + S cos H / cos(60°-H)), etc.).
 - **Diagrama de Cromaticidad**: Representa colores en plano xy (CIE), ignorando brillo.
@@ -196,7 +196,7 @@ plt.show()
 La convolución aplica un kernel sobre la imagen para transformar píxeles basados en vecinos, revelando características como bordes o suavizado.
 
 ### **Teoría**
-La convolución 2D es: \((f * g)(x,y) = \sum_{i,j} f(i,j) \cdot g(x-i, y-j)\), donde f es la imagen y g el kernel. En frecuencia, es multiplicación vía FFT para eficiencia.
+La convolución 2D es: $(f * g)(x,y) = \sum_{i,j} f(i,j) \cdot g(x-i, y-j)$, donde f es la imagen y g el kernel. En frecuencia, es multiplicación vía FFT para eficiencia.
 
 ### **Práctica**
 - **Filtro de Promedio (Suavizado)**: Kernel uniforme (e.g., 3x3: 1/9 en todos).
@@ -207,7 +207,7 @@ img_avg = cv2.filter2D(img, -1, kernel_avg)
 plt.imshow(img_avg)
 plt.show()
 ```
-- **Filtro Laplaciano (Detección de Bordes)**: Kernel: \[\begin{bmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{bmatrix}\]
+- **Filtro Laplaciano (Detección de Bordes)**: Kernel: $$\begin{bmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{bmatrix}$$
 ```python
 kernel_lap = np.array([[0,1,0], [1,-4,1], [0,1,0]])
 img_lap = cv2.filter2D(imgGray, -1, kernel_lap)
