@@ -8,30 +8,24 @@ Las transformaciones geométricas modifican la posición, tamaño o orientación
 
 ### **Teoría**
 - **Traslación**: Desplaza la imagen en los ejes x e y. Matemáticamente, para un píxel (x, y), la nueva posición es (x + tx, y + ty), donde tx y ty son los desplazamientos. La matriz afín es:
-  $$
-  \begin{bmatrix}
+  $$\begin{bmatrix}
   1 & 0 & tx \\
   0 & 1 & ty \\
   0 & 0 & 1
-  \end{bmatrix}
-  $$
+  \end{bmatrix}$$
 - **Escalado**: Cambia el tamaño de la imagen multiplicando las coordenadas por factores sx (horizontal) y sy (vertical). La matriz es:
-  $$
-  \begin{bmatrix}
+  $$\begin{bmatrix}
   sx & 0 & 0 \\
   0 & sy & 0 \\
   0 & 0 & 1
-  \end{bmatrix}
-  $$
+  \end{bmatrix}$$
   Un escalado uniforme (sx = sy) preserva la relación de aspecto.
 - **Rotación**: Gira la imagen alrededor de un punto (usualmente el centro) por un ángulo θ. La matriz de rotación en sentido antihorario es:
-  $$
-  \begin{bmatrix}
+  $$\begin{bmatrix}
   \cos\theta & -\sin\theta & 0 \\
   \sin\theta & \cos\theta & 0 \\
   0 & 0 & 1
-  \end{bmatrix}
-  $$
+  \end{bmatrix}$$
   Para rotación en sentido horario, se invierten los signos de los términos con seno: cosθ y sinθ en la primera fila, -sinθ y cosθ en la segunda. Para composiciones, se combinan matrices (e.g., rotación seguida de traslación para centrar la imagen).
 
 Estas transformaciones pueden causar artefactos si no se aplica interpolación (e.g., bilineal o bicúbica). En casos avanzados, como corrección de perspectiva, se usa una transformación proyectiva (homografía) con una matriz 3x3 general.
@@ -127,9 +121,7 @@ Los espacios de color representan la información cromática de manera estructur
   RGB y CMYK no son intuitivos para humanos; HSI lo es, con intensidad en eje vertical.
 - **Equivalencia y Conversiones**:
   - **RGB → HSI**:
-    $$
-    I = \frac{R + G + B}{3}, \quad S = 1 - \frac{3 \min(R,G,B)}{R+G+B}, \quad H = \cos^{-1}\left( \frac{(R-G) + (R-B)}{2\sqrt{(R-G)^2 + (R-B)(G-B)}} \right)
-    $$
+    $$I = \frac{R + G + B}{3}, \quad S = 1 - \frac{3 \min(R,G,B)}{R+G+B}, \quad H = \cos^{-1}\left( \frac{(R-G) + (R-B)}{2\sqrt{(R-G)^2 + (R-B)(G-B)}} \right)$$
     Ajustar H basado en canales dominantes.
   - **HSI → RGB**: Dependiente del sector de H (e.g., para H en [0,120°]: R = I(1 + S cos H / cos(60°-H)), etc.).
 - **Diagrama de Cromaticidad**: Representa colores en plano xy (CIE), ignorando brillo.
